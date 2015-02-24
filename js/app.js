@@ -6,6 +6,13 @@ var Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+    // this.x is as such to create delay in enemy showing on canvas
+    this.x = Math.random() * -1000 - 101;
+    // this.y is as such to create random showing on rows on canvas and
+    // 21 pixel substracted to center enemy on image block
+    this.y = -21 + Math.ceil(Math.random() * 3) * 83;
+    // Speed is made random and has minimum of 100
+    this.speed = Math.round(Math.random() * 400) + 100;
 }
 
 // Update the enemy's position, required method for game
@@ -14,6 +21,16 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    // Enemy will be repositioned and after passing the most right of canvas
+    if (this.x >= 505) {
+        this.x = Math.random() * -1000 - 101;
+        this.y = -21 + Math.ceil(Math.random() * 3) * 83;
+        // Speed will be reassigned after passing the most right of canvas
+        this.speed = Math.round(Math.random() * 400) + 100;
+    } else {
+        // Movement is dt times enemy speed
+        this.x += dt * this.speed;
+    }
 }
 
 // Draw the enemy on the screen, required method for game
