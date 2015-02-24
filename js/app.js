@@ -54,13 +54,13 @@ var Player = function() {
 Player.prototype.update = function(axis, movement) {
     // Conditions to determine horizontal or vertical movement and
     // so player could not move beyond canvas
-    if (axis === 'x' && (this.x + movement >= 0 && this.x + movement < 505)) {
+    if (axis === 'x' && this.x + movement >= 0 && this.x + movement < 505) {
         this.x = this.x + movement;
-    } else if (axis === 'y' && ((this.y + movement) <= 382 && (this.y + movement) >= 50)) {
+    } else if (axis === 'y' && this.y + movement <= 382 && this.y + movement >= 50)) {
         this.y = this.y + movement;
     // Condition below to reset player's position to initial after
     // crossing the water and add score
-    } else if (axis === 'y' && (this.y + movement) < 50) {
+    } else if (axis === 'y' && this.y + movement < 50) {
         data.score += 10;
         this.x = 202;
         this.y = 382;
@@ -182,7 +182,7 @@ function checkCollisions() {
         // between enemy's most left and right pixel and
         // it checks the vertical position, on which if player and enemy
         // object are at the same row they would differ 12px vertically
-        if (((player.x + 17 > enemy.x && player.x + 17 < enemy.x + 100) || (player.x + 84 > enemy.x && player.x + 84 < enemy.x + 100)) && player.y === enemy.y - 12) {
+        if ((player.x + 17 > enemy.x && player.x + 17 < enemy.x + 100 || player.x + 84 > enemy.x && player.x + 84 < enemy.x + 100) && player.y === enemy.y - 12) {
             data.lives -= 1;
             player.x = 202;
             player.y = 382;
