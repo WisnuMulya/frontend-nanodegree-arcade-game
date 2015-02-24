@@ -137,6 +137,23 @@ Gem.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
+// Life class for player to collext to add lives
+var Life = function() {
+    this.sprite = 'images/Heart.png';
+    this.x = undefined;
+    this.y = undefined;
+}
+
+// Update method to determine life location
+Life.prototype.update = function() {
+    this.x = Math.round(Math.random() * 4) * 101;
+    this.y = Math.round(Math.random() * 4) * 83 + 76;
+}
+
+Life.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
@@ -159,6 +176,9 @@ var gemNormal = new Gem('normal');
 var gemMedium = new Gem('medium');
 var gemHigh = new Gem('high');
 var allGems = [gemNormal, gemMedium, gemHigh];
+
+// Instantiate life object
+var life = new Life();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -202,14 +222,31 @@ function checkCollisions() {
             }, Math.round(Math.random() * gem.points) * 1000 + 1000)
         }
     });
+
+    // Check collision between player and life
+    if (player.x === life.x && player.y === life.y - 26) {
+        // Dissapear life and add lives by 1
+        life.x = undefined;
+        life.y = undefined;
+        data.lives += 1;
+        // Show life after certain random time
+        setTimeout(function() {
+            life.update();
+        }, Math.round(Math.random() * 50) * 1000)
+    }
 }
 
-// Initial setting on gem to be shown on certain random time
-// that depends on gem's points
+// Show collectibles after certain random time
 Resources.onReady(function() {
+    // Show gem after certain random time that depends on gem's points
     allGems.forEach(function(gem) {
         setTimeout(function() {
             gem.update();
         }, Math.round(Math.random() * gem.points / 10) * 10000 + 1000)
     });
+
+    // Show life after certain random time
+    setTimeout(function() {
+        life.update();
+    }, Math.round(Math.random() * 10) * 10000);
 });
