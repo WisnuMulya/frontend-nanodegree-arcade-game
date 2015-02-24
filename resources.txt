@@ -1,0 +1,6 @@
+Resources I used in this project:
+- Udacity GitHub account: https://github.com/udacity/frontend-nanodegree-resume
+- Mozilla Developer Network website: https://developer.mozilla.org
+- Udacity HTML5 Canvas course: https://www.udacity.com/course/viewer#!/c-ud292-nd
+- Udacity Object-oriented JavaScript course: https://www.udacity.com/course/viewer#!/c-ud015-nd
+- Mike Pilgrim's online book on HTML5 canvas to write text on canvas and why using 0.5 addition to coordinate in making strokes: http://diveintohtml5.info/canvas.html
