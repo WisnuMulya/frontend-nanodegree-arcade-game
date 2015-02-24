@@ -41,7 +41,47 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
+var Player = function() {
+    this.sprite = 'images/char-boy.png';
+    // X and Y coordinates as such that player initially appears in bottom center
+    this.x = 202;
+    this.y = 382;
+}
 
+// Update method takes two arguments:
+// axis to determine whether to move horizontally or vertically
+// movement to determine how many pixels the movement is on canvas
+Player.prototype.update = function(axis, movement) {
+    // Conditions to determine horizontal or vertical movement and
+    // so player could not move beyond canvas
+    if (axis === 'x' && (this.x + movement >= 0 && this.x + movement < 505)) {
+        this.x = this.x + movement;
+    } else if (axis === 'y' && ((this.y + movement) <= 382 && (this.y + movement) >= 50)) {
+        this.y = this.y + movement;
+    // Condition below to reset player's position to initial after
+    // crossing the water
+    } else if (axis === 'y' && (this.y + movement) < 50) {
+        this.x = 202;
+        this.y = 382;
+    }
+}
+Player.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+// handleInput takes direction argument from addEventListener and
+// use update method to reposition player object
+Player.prototype.handleInput = function(direction) {
+    if (direction == 'left') {
+        this.update('x', -101);
+    } else if (direction == 'up') {
+        this.update('y', -83);
+    } else if (direction == 'right') {
+        this.update('x', 101);
+    } else {
+        this.update('y', 83);
+    }
+}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
