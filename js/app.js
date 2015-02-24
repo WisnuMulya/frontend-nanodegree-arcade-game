@@ -93,8 +93,12 @@ var enemy3 = new Enemy();
 var enemy4 = new Enemy();
 var enemy5 = new Enemy();
 var enemy6 = new Enemy();
+
 // Create variable allEnemies for updateEntities function in engine.js
 var allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6];
+
+// Instantiate player object
+var player = new Player();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
