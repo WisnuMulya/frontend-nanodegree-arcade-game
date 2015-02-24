@@ -9,7 +9,7 @@ var Enemy = function() {
     // this.x is as such to create delay in enemy showing on canvas
     this.x = Math.random() * -1000 - 101;
     // this.y is as such to create random showing on rows on canvas and
-    // 21 pixel substracted to center enemy on image block
+    // 21 pixel is substracted to center enemy on image block
     this.y = -21 + Math.ceil(Math.random() * 3) * 83;
     // Speed is made random and has minimum of 100
     this.speed = Math.round(Math.random() * 400) + 100;
@@ -21,17 +21,17 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    // Enemy will be repositioned and after passing the most right of canvas
-    if (this.x >= 505) {
-        this.x = Math.random() * -1000 - 101;
-        this.y = -21 + Math.ceil(Math.random() * 3) * 83;
+    // Enemy will be repositioned after passing the most right of canvas
+    this.x >= 505 ? (
+        this.x = Math.random() * -1000 - 101,
+        this.y = -21 + Math.ceil(Math.random() * 3) * 83,
         // Speed will be reassigned after passing the most right of canvas
-        this.speed = Math.round(Math.random() * 400) + 100;
-    } else {
+        this.speed = Math.round(Math.random() * 400) + 100
+    ) : (
         // Movement is dt times enemy speed
-        this.x += dt * this.speed;
-    }
-};
+        this.x += dt * this.speed
+    )
+}
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
@@ -42,7 +42,7 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function() {
-    this.sprite = undefined; // to be later defined in character selection
+    this.sprite = undefined; // To be later defined in character selection
     // X and Y coordinates as such that player initially appears in bottom center
     this.x = 202;
     this.y = 382;
@@ -65,11 +65,11 @@ Player.prototype.update = function(axis, movement) {
         this.x = 202;
         this.y = 382;
     }
-};
+}
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
+}
 
 // handleInput takes direction argument from addEventListener and
 // use update method to reposition player object
@@ -83,7 +83,7 @@ Player.prototype.handleInput = function(direction) {
     } else {
         this.update('y', 83);
     }
-};
+}
 
 // Create data object that keeps track of score and lives and
 // contains update and render methods to show itself on canvas
@@ -91,21 +91,21 @@ var data = {
     // Initial score and lives
     score: 0,
     lives:  3,
-    // Update method to change data which takes 2 arguments for
-    // changing each properties
+    // Update method reset score and lives when lives is 0
     update: function() {
         if (data.lives === 0) {
             data.score = 0;
             data.lives = 3;
         }
     },
+    // Render method put score and lives on the canvas
     render: function() {
         ctx.font = "16px 'Helvetica Neue'";
         ctx.textBaseline = "top";
         ctx.textAlign = 'left';
         ctx.fillText("Score: " + this.score + " Lives: " + this.lives, 0.5, 0.5); // 0.5 is adjustment to make text less blurry
     }
-}
+};
 
 // Gem class for player to collect to add score
 var Gem = function(type) {
@@ -131,18 +131,19 @@ Gem.prototype.update = function() {
     // anywhere on the canvas except the water area
     this.x = Math.round(Math.random() * 4) * 101;
     this.y = Math.round(Math.random() * 4) * 83 + 53;
-};
+}
 
 Gem.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
-// Life class for player to collext to add lives
+// Life class for player to collect to add lives
 var Life = function() {
     this.sprite = 'images/Heart.png';
+    // Prevent life object appears at inital
     this.x = undefined;
     this.y = undefined;
-}
+};
 
 // Update method to determine life location
 Life.prototype.update = function() {
@@ -154,7 +155,8 @@ Life.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
-// Create gameLayout variable to help event listener on which function to call
+// Create gameLayout variable to help addEventListener on determining
+// what actions must be taken and on what depending on the current game layout
 var gameLayout;
 
 // Create selector object for use in character selection
@@ -179,7 +181,7 @@ var selector = {
             this.update(101);
         }
     }
-}
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -219,7 +221,7 @@ document.addEventListener('keydown', function(e) {
         13: 'enter'
     };
 
-    // Conditional to check gameLayout and adjust which handleInput is called
+    // Conditional to check gameLayout and determine what to be done and on what
     if (gameLayout === 'mainGame') {
         // Move player if gameLayout is mainGame
         player.handleInput(allowedKeys[e.keyCode]);
@@ -266,7 +268,7 @@ function checkCollisions() {
             gem.x = undefined;
             gem.y = undefined;
             data.score += gem.points;
-            // Show gem after certain random time that depends on gem's points
+            // Show gem after certain amount of random time and depends on gem's points
             setTimeout(function() {
                 gem.update();
             }, Math.round(Math.random() * gem.points) * 1000 + 1000)
@@ -279,23 +281,23 @@ function checkCollisions() {
         life.x = undefined;
         life.y = undefined;
         data.lives += 1;
-        // Show life after certain random time
+        // Show life after certain amount of random time
         setTimeout(function() {
             life.update();
         }, Math.round(Math.random() * 50) * 1000)
     }
 }
 
-// Show collectibles after certain random time
+// Show collectibles (gems and life) after certain amount of random time
 Resources.onReady(function() {
-    // Show gem after certain random time that depends on gem's points
+    // Show gem after certain amount of random time and depends on gem's points
     allGems.forEach(function(gem) {
         setTimeout(function() {
             gem.update();
         }, Math.round(Math.random() * gem.points / 10) * 10000 + 1000)
     });
 
-    // Show life after certain random time
+    // Show life after certain amount random time
     setTimeout(function() {
         life.update();
     }, Math.round(Math.random() * 10) * 10000);

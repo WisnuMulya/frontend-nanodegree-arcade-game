@@ -172,7 +172,8 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        layout = 'selection';
+        // Assign gameLayout to selection
+        gameLayout = 'selection';
 
         // Color the canvas to grey and render text
         ctx.fillStyle = '#ddd';
