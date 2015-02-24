@@ -46,8 +46,15 @@ Enemy.prototype.render = function() {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-
-
+// Instantiate 6 enemies
+var enemy1 = new Enemy();
+var enemy2 = new Enemy();
+var enemy3 = new Enemy();
+var enemy4 = new Enemy();
+var enemy5 = new Enemy();
+var enemy6 = new Enemy();
+// Create variable allEnemies for updateEntities function in engine.js
+var allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6];
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
