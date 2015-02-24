@@ -56,7 +56,7 @@ Player.prototype.update = function(axis, movement) {
     // so player could not move beyond canvas
     if (axis === 'x' && this.x + movement >= 0 && this.x + movement < 505) {
         this.x = this.x + movement;
-    } else if (axis === 'y' && this.y + movement <= 382 && this.y + movement >= 50)) {
+    } else if (axis === 'y' && this.y + movement <= 382 && this.y + movement >= 50) {
         this.y = this.y + movement;
     // Condition below to reset player's position to initial after
     // crossing the water and add score
