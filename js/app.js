@@ -113,3 +113,17 @@ document.addEventListener('keydown', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+// Create checkcCollisions global function
+function checkCollisions() {
+    allEnemies.forEach(function(enemy) {
+        // Condition checks whether player's most left of right pixel is
+        // between enemy's most left and right pixel and
+        // it checks the vertical position, on which if player and enemy
+        // object are at the same row they would differ 12px vertically
+        if (((player.x + 17 > enemy.x && player.x + 17 < enemy.x + 100) || (player.x + 84 > enemy.x && player.x + 84 < enemy.x + 100)) && player.y === enemy.y - 12) {
+            player.x = 202;
+            player.y = 382;
+        }
+    });
+}
