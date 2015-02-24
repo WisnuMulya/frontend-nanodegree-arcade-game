@@ -107,6 +107,36 @@ var data = {
     }
 }
 
+// Gem class for player to collect to add score
+var Gem = function(type) {
+    // Differentiating gem based on how many points it adds to score
+    if(type === 'normal') {
+        this.sprite = 'images/Gem\ Blue.png';
+        this.points = 10;
+    } else if (type === 'medium') {
+        this.sprite = 'images/Gem\ Green.png';
+        this.points = 20;
+    } else if (type === 'high') {
+        this.sprite = 'images/Gem\ Orange.png';
+        this.points = 30;
+    }
+    // To prevent gems showing initially
+    this.x = undefined;
+    this.y = undefined;
+};
+
+// Update method to determine gem location
+Gem.prototype.update = function() {
+    // Randomizing gem location which can be
+    // anywhere on the canvas except the water area
+    this.x = Math.round(Math.random() * 4) * 101;
+    this.y = Math.round(Math.random() * 4) * 83 + 53;
+};
+
+Gem.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
@@ -124,6 +154,12 @@ var allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6];
 // Instantiate player object
 var player = new Player();
 
+// Instantiate gem objects
+var gemNormal = new Gem('normal');
+var gemMedium = new Gem('medium');
+var gemHigh = new Gem('high');
+var allGems = [gemNormal, gemMedium, gemHigh];
+
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
     // Changing keyup to keydown to improve control experience
@@ -140,6 +176,7 @@ document.addEventListener('keydown', function(e) {
 
 // Create checkcCollisions global function
 function checkCollisions() {
+    // Check collision between player and enemy
     allEnemies.forEach(function(enemy) {
         // Condition checks whether player's most left of right pixel is
         // between enemy's most left and right pixel and
@@ -151,4 +188,28 @@ function checkCollisions() {
             player.y = 382;
         }
     });
+
+    // Check collision between player and gem
+    allGems.forEach(function(gem) {
+        if (player.x === gem.x && player.y === gem.y - 3) {
+            // Dissapear gem and add points to score
+            gem.x = undefined;
+            gem.y = undefined;
+            data.score += gem.points;
+            // Show gem after certain random time that depends on gem's points
+            setTimeout(function() {
+                gem.update();
+            }, Math.round(Math.random() * gem.points) * 1000 + 1000)
+        }
+    });
 }
+
+// Initial setting on gem to be shown on certain random time
+// that depends on gem's points
+Resources.onReady(function() {
+    allGems.forEach(function(gem) {
+        setTimeout(function() {
+            gem.update();
+        }, Math.round(Math.random() * gem.points / 10) * 10000 + 1000)
+    });
+});
