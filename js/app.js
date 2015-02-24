@@ -42,7 +42,7 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function() {
-    this.sprite = 'images/char-boy.png';
+    this.sprite = undefined; // to be later defined in character selection
     // X and Y coordinates as such that player initially appears in bottom center
     this.x = 202;
     this.y = 382;
@@ -154,6 +154,33 @@ Life.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
+// Create gameLayout variable to help event listener on which function to call
+var gameLayout;
+
+// Create selector object for use in character selection
+var selector = {
+    sprite: 'images/Selector.png',
+    // Position in the center of canvas
+    x: 202,
+    y: 216,
+    // Update method takes movement argument to move selector position horizontally
+    update: function(movement) {
+        this.x += movement;
+    },
+    render: function() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    },
+    // handleInput method takes in direction from event listener
+    // and  prevent selector to move beyond canvas
+    handleInput: function(direction) {
+        if (direction === 'left' && this.x > 0) {
+            this.update(-101);
+        } else if (direction === 'right' && this.x < 404) {
+            this.update(101);
+        }
+    }
+}
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
@@ -188,10 +215,33 @@ document.addEventListener('keydown', function(e) {
         37: 'left',
         38: 'up',
         39: 'right',
-        40: 'down'
+        40: 'down',
+        13: 'enter'
     };
 
-    player.handleInput(allowedKeys[e.keyCode]);
+    // Conditional to check gameLayout and adjust which handleInput is called
+    if (gameLayout === 'mainGame') {
+        // Move player if gameLayout is mainGame
+        player.handleInput(allowedKeys[e.keyCode]);
+    } else {
+        // Assign player.sprite if layout is selection and enter is pressed
+        if (allowedKeys[e.keyCode] === 'enter') {
+            if (selector.x === 0) {
+                player.sprite = 'images/char-boy.png';
+            } if (selector.x === 101) {
+                player.sprite = 'images/char-cat-girl.png';
+            } if (selector.x === 202) {
+                player.sprite = 'images/char-horn-girl.png';
+            } if (selector.x === 303) {
+                player.sprite = 'images/char-pink-girl.png';
+            } if (selector.x === 404) {
+                player.sprite = 'images/char-princess-girl.png';
+            }
+        } else {
+            // Move selector if layout is selection and arrow key is pressed
+            selector.handleInput(allowedKeys[e.keyCode]);
+        }
+    }
 });
 
 // Create checkcCollisions global function

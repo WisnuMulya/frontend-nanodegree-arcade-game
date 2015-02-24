@@ -63,10 +63,10 @@ var Engine = (function(global) {
      * particularly setting the lastTime variable that is required for the
      * game loop.
      */
+    // main() is removed from init to reset
     function init() {
         reset();
         lastTime = Date.now();
-        main();
     }
 
     /* This function is called by main (our game loop) and itself calls all
@@ -172,7 +172,43 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
+        layout = 'selection';
+
+        // Color the canvas to grey and render text
+        ctx.fillStyle = '#ddd';
+        ctx.fillRect(0, 0, 505, 606);
+        ctx.font = "32px 'Helvetica Neue'";
+        ctx.fillStyle = 'black'
+        ctx.textBaseline = 'top';
+        ctx.textAlign = 'center';
+        ctx.fillText('SELECT CHARACTER THEN', 252.5, 50.5);
+        ctx.fillText('PRESS ENTER', 252.5, 83.5);
+
+        selector.render(); // Render selector image
+
+        // Setting initial position for character rendering
+        var charX = 0;
+        var charY = 216;
+
+        // Render character images
+        var characterImages = [
+            'images/char-boy.png',
+            'images/char-cat-girl.png',
+            'images/char-horn-girl.png',
+            'images/char-pink-girl.png',
+            'images/char-princess-girl.png'
+        ];
+        characterImages.forEach(function(character) {
+            ctx.drawImage(Resources.get(character), charX, charY);
+            charX += 101; // Position for the next character to be rendered
+        })
+
+        // Conditional to determine whether to stay in character selection layout
+        // or move on to the mainGame layout
+        player.sprite === undefined ? win.requestAnimationFrame(reset) : (
+            gameLayout = 'mainGame',
+            main()
+        );
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -185,10 +221,15 @@ var Engine = (function(global) {
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/char-boy.png',
+        'images/char-cat-girl.png',
+        'images/char-horn-girl.png',
+        'images/char-pink-girl.png',
+        'images/char-princess-girl.png',
         'images/Gem\ Blue.png',
         'images/Gem\ Green.png',
         'images/Gem\ Orange.png',
-        'images/Heart.png'
+        'images/Heart.png',
+        'images/Selector.png'
     ]);
     Resources.onReady(init);
 
