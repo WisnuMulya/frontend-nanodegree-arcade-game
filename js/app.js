@@ -59,8 +59,9 @@ Player.prototype.update = function(axis, movement) {
     } else if (axis === 'y' && ((this.y + movement) <= 382 && (this.y + movement) >= 50)) {
         this.y = this.y + movement;
     // Condition below to reset player's position to initial after
-    // crossing the water
+    // crossing the water and add score
     } else if (axis === 'y' && (this.y + movement) < 50) {
+        data.score += 10;
         this.x = 202;
         this.y = 382;
     }
@@ -83,6 +84,28 @@ Player.prototype.handleInput = function(direction) {
         this.update('y', 83);
     }
 };
+
+// Create data object that keeps track of score and lives and
+// contains update and render methods to show itself on canvas
+var data = {
+    // Initial score and lives
+    score: 0,
+    lives:  3,
+    // Update method to change data which takes 2 arguments for
+    // changing each properties
+    update: function() {
+        if (data.lives === 0) {
+            data.score = 0;
+            data.lives = 3;
+        }
+    },
+    render: function() {
+        ctx.font = "16px 'Helvetica Neue'";
+        ctx.textBaseline = "top";
+        ctx.textAlign = 'left';
+        ctx.fillText("Score: " + this.score + " Lives: " + this.lives, 0.5, 0.5); // 0.5 is adjustment to make text less blurry
+    }
+}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -123,6 +146,7 @@ function checkCollisions() {
         // it checks the vertical position, on which if player and enemy
         // object are at the same row they would differ 12px vertically
         if (((player.x + 17 > enemy.x && player.x + 17 < enemy.x + 100) || (player.x + 84 > enemy.x && player.x + 84 < enemy.x + 100)) && player.y === enemy.y - 12) {
+            data.lives -= 1;
             player.x = 202;
             player.y = 382;
         }

@@ -91,6 +91,7 @@ var Engine = (function(global) {
      * render methods.
      */
     function updateEntities(dt) {
+        data.update();
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
@@ -148,6 +149,8 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
+        data.render();
+
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
