@@ -13,7 +13,7 @@ var Enemy = function() {
     this.y = -21 + Math.ceil(Math.random() * 3) * 83;
     // Speed is made random and has minimum of 100
     this.speed = Math.round(Math.random() * 400) + 100;
-}
+};
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -31,12 +31,12 @@ Enemy.prototype.update = function(dt) {
         // Movement is dt times enemy speed
         this.x += dt * this.speed;
     }
-}
+};
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -46,7 +46,7 @@ var Player = function() {
     // X and Y coordinates as such that player initially appears in bottom center
     this.x = 202;
     this.y = 382;
-}
+};
 
 // Update method takes two arguments:
 // axis to determine whether to move horizontally or vertically
@@ -64,10 +64,11 @@ Player.prototype.update = function(axis, movement) {
         this.x = 202;
         this.y = 382;
     }
-}
+};
+
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 // handleInput takes direction argument from addEventListener and
 // use update method to reposition player object
@@ -81,7 +82,7 @@ Player.prototype.handleInput = function(direction) {
     } else {
         this.update('y', 83);
     }
-}
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
