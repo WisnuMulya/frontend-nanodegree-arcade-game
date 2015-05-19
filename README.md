@@ -1,11 +1,11 @@
 frontend-nanodegree-arcade-game
 ===============================
 
-How to Start Playing:
+# How to Start Playing:
 1. Open index.html in your browser
 2. Choose your character by using arrow keys and press enter to choose
 
-Game Rules:
+# Game Rules:
 * You start with score 0 and 3 lives
 * You will be summoned at initial place upon death or get to the water
 * You will lose 1 life when you get hit by a bug
