@@ -30,8 +30,8 @@ Enemy.prototype.update = function(dt) {
     ) : (
         // Movement is dt times enemy speed
         this.x += dt * this.speed
-    )
-}
+    );
+};
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
@@ -65,11 +65,11 @@ Player.prototype.update = function(axis, movement) {
         this.x = 202;
         this.y = 382;
     }
-}
+};
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 // handleInput takes direction argument from addEventListener and
 // use update method to reposition player object
@@ -83,7 +83,7 @@ Player.prototype.handleInput = function(direction) {
     } else {
         this.update('y', 83);
     }
-}
+};
 
 // Create data object that keeps track of score and lives and
 // contains update and render methods to show itself on canvas
@@ -101,9 +101,9 @@ var data = {
     // Render method put score and lives on the canvas
     render: function() {
         ctx.font = "16px 'Helvetica Neue'";
-        ctx.textBaseline = "top";
+        ctx.textBaseline = 'top';
         ctx.textAlign = 'left';
-        ctx.fillText("Score: " + this.score + " Lives: " + this.lives, 0.5, 0.5); // 0.5 is adjustment to make text less blurry
+        ctx.fillText('Score: ' + this.score + ' Lives: ' + this.lives, 0.5, 0.5); // 0.5 is adjustment to make text less blurry
     }
 };
 
@@ -131,11 +131,11 @@ Gem.prototype.update = function() {
     // anywhere on the canvas except the water area
     this.x = Math.round(Math.random() * 4) * 101;
     this.y = Math.round(Math.random() * 4) * 83 + 53;
-}
+};
 
 Gem.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 // Life class for player to collect to add lives
 var Life = function() {
@@ -149,11 +149,11 @@ var Life = function() {
 Life.prototype.update = function() {
     this.x = Math.round(Math.random() * 4) * 101;
     this.y = Math.round(Math.random() * 4) * 83 + 76;
-}
+};
 
 Life.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 // Create gameLayout variable to help addEventListener on determining
 // what actions must be taken and on what depending on the current game layout
