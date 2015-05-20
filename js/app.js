@@ -186,16 +186,14 @@ var selector = {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-// Instantiate 6 enemies
-var enemy1 = new Enemy();
-var enemy2 = new Enemy();
-var enemy3 = new Enemy();
-var enemy4 = new Enemy();
-var enemy5 = new Enemy();
-var enemy6 = new Enemy();
 
 // Create variable allEnemies for updateEntities function in engine.js
-var allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6];
+var allEnemies = [];
+
+// Instantiate 6 enemies
+for (var i = 0; i < 6; i++) {
+    allEnemies.push(new Enemy());
+}
 
 // Instantiate player object
 var player = new Player();
