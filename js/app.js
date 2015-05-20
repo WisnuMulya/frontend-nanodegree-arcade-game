@@ -271,7 +271,7 @@ function checkCollisions() {
             // Show gem after certain amount of random time and depends on gem's points
             setTimeout(function() {
                 gem.update();
-            }, Math.round(Math.random() * gem.points) * 1000 + 1000)
+            }, Math.round(Math.random() * gem.points) * 1000 + 1000);
         }
     });
 
@@ -284,7 +284,7 @@ function checkCollisions() {
         // Show life after certain amount of random time
         setTimeout(function() {
             life.update();
-        }, Math.round(Math.random() * 50) * 1000)
+        }, Math.round(Math.random() * 50) * 1000);
     }
 }
 
@@ -294,7 +294,7 @@ Resources.onReady(function() {
     allGems.forEach(function(gem) {
         setTimeout(function() {
             gem.update();
-        }, Math.round(Math.random() * gem.points / 10) * 10000 + 1000)
+        }, Math.round(Math.random() * gem.points / 10) * 10000 + 1000);
     });
 
     // Show life after certain amount random time

@@ -179,7 +179,7 @@ var Engine = (function(global) {
         ctx.fillStyle = '#ddd';
         ctx.fillRect(0, 0, 505, 606);
         ctx.font = "32px 'Helvetica Neue'";
-        ctx.fillStyle = 'black'
+        ctx.fillStyle = 'black';
         ctx.textBaseline = 'top';
         ctx.textAlign = 'center';
         ctx.fillText('SELECT CHARACTER THEN', 252.5, 50.5);
@@ -202,7 +202,7 @@ var Engine = (function(global) {
         characterImages.forEach(function(character) {
             ctx.drawImage(Resources.get(character), charX, charY);
             charX += 101; // Position for the next character to be rendered
-        })
+        });
 
         // Conditional to determine whether to stay in character selection layout
         // or move on to the mainGame layout
